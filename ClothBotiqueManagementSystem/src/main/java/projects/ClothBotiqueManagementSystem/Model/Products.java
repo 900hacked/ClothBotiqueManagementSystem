@@ -12,6 +12,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 @Entity
 @Table(name = "Products")
 public class Products {
@@ -26,6 +28,7 @@ public class Products {
 	
 	private int stock;
 	
+	@JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
 	private LocalDateTime createdOn;
 	
 	@OneToMany(mappedBy = "products", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
@@ -63,7 +66,7 @@ public class Products {
 		return description;
 	}
 
-	public void setDscription(String description) {
+	public void setDescription(String description) {
 		this.description = description;
 	}
 

@@ -79,7 +79,7 @@ public class OrdersController {
 	
 	@ResponseBody
 	@RequestMapping(value = "/get/{id}", method = RequestMethod.GET)
-	public Orders getLandById(@PathVariable("id") int id) {
+	public Orders getOrdersById(@PathVariable("id") int id) {
 		
 		Orders body = service.getOrdersById(id);
 		return body;
@@ -87,7 +87,7 @@ public class OrdersController {
 	
 	@ResponseBody
 	@RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
-	public String removeBodyCare(@PathVariable("id") int id ) {
+	public String removeOrders(@PathVariable("id") int id ) {
 		
 		service.removeOrders(id);
 		return "Order " + id + " has been deleted";
