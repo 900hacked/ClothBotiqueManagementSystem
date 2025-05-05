@@ -4,18 +4,33 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+@Entity
+@Table(name = "Orders")
 public class Orders {
-	
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int orderId;
 	
-	private int CustomerId;
+//	private int CustomerId;
 	
+	@JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
 	private LocalDateTime orderDate;
 	
-	private String status;
+	@Enumerated(EnumType.STRING)
+	private Status status;
 	
 	private double totalAmount;
 	
@@ -26,10 +41,9 @@ public class Orders {
 		
 	}
 
-	public Orders(int orderId, int customerId, LocalDateTime orderDate, String status, double totalAmount) {
+	public Orders( LocalDateTime orderDate, Status status, double totalAmount) {
 		
-		this.orderId = orderId;
-		this.CustomerId = customerId;
+		
 		this.orderDate = orderDate;
 		this.status = status;
 		this.totalAmount = totalAmount;
@@ -43,13 +57,7 @@ public class Orders {
 		this.orderId = orderId;
 	}
 
-	public int getCustomerId() {
-		return CustomerId;
-	}
-
-	public void setCustomerId(int customerId) {
-		CustomerId = customerId;
-	}
+	
 
 	public LocalDateTime getOrderDate() {
 		return orderDate;
@@ -59,11 +67,11 @@ public class Orders {
 		this.orderDate = orderDate;
 	}
 
-	public String getStatus() {
+	public Status getStatus() {
 		return status;
 	}
 
-	public void setStatus(String status) {
+	public void setStatus(Status status) {
 		this.status = status;
 	}
 

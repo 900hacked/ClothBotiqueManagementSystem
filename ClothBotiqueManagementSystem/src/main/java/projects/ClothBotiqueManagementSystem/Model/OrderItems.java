@@ -14,14 +14,14 @@ public class OrderItems {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int OrderId;
+	private int OrderItemsId;
 	
 	@ManyToOne
-	@JoinColumn(name = "order_id")
+	@JoinColumn(name = "orderId")
 	private Orders orders;
 	
 	@ManyToOne
-	@JoinColumn(name = "product_id")
+	@JoinColumn(name = "productId")
 	private Products products;
 	
 	private int quantity;
@@ -42,11 +42,11 @@ public class OrderItems {
 	}
 
 	public int getOrderId() {
-		return OrderId;
+		return OrderItemsId;
 	}
 
 	public void setOrderId(int orderId) {
-		OrderId = orderId;
+		OrderItemsId = orderId;
 	}
 
 	public Orders getOrders() {
