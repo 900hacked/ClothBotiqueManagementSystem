@@ -34,7 +34,7 @@ public class OrdersController {
 
 	@ResponseBody
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
-	public String addProduct(@RequestBody @Valid Orders orders ) {
+	public String addOrder(@RequestBody @Valid Orders orders ) {
 		
 //		HttpSession session = request.getSession(false);
 //        if (session == null || session.getAttribute("user") == null) {
@@ -49,7 +49,7 @@ public class OrdersController {
 //        	 return "User registered successfully";
 //        }
 		
-		service.addProduct(orders);
+		service.addOrder(orders);
 		
 		return "Order successfully added";
 		
@@ -60,7 +60,7 @@ public class OrdersController {
 	@ResponseBody
 	@RequestMapping(value = "/update/{id}",  method = RequestMethod.PUT)
 	
-	public String updateProduct(@RequestBody Orders updatedProduct, @PathVariable("id") int id, HttpServletRequest request) {
+	public String updateOrder(@RequestBody Orders updatedProduct, @PathVariable("id") int id, HttpServletRequest request) {
 		
 ////		HttpSession session = request.getSession(false);
 ////        if (session == null || session.getAttribute("user") == null) {
@@ -121,11 +121,11 @@ public class OrdersController {
 ////            return "Invalid credentials";
 ////        }
 ////	}
-//	
-//	@ResponseBody
-//	@RequestMapping(value = "/gets", method = RequestMethod.GET)
-//	public List<Orders> getAll() {
-//		
-//		return  service.listOrders();
-//	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/gets", method = RequestMethod.GET)
+	public List<Orders> getAll() {
+		
+		return  service.listOrders();
+	}
 }

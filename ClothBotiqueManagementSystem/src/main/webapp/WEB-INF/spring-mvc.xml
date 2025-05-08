@@ -40,7 +40,6 @@
 				<list>
 					<value>projects.ClothBotiqueManagementSystem.Model.Products</value>
 					<value>projects.ClothBotiqueManagementSystem.Model.Orders</value>
-					<value>projects.ClothBotiqueManagementSystem.Model.OrderItems</value>
 					<value>projects.ClothBotiqueManagementSystem.Model.User</value>
 				</list>
 			</property>

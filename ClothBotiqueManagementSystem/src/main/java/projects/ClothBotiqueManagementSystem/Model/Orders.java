@@ -11,10 +11,15 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+
+
 
 @Entity
 @Table(name = "Orders")
@@ -24,7 +29,6 @@ public class Orders {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int orderId;
 	
-//	private int CustomerId;
 	
 	@JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
 	private LocalDateTime orderDate;
@@ -34,8 +38,12 @@ public class Orders {
 	
 	private double totalAmount;
 	
-	@OneToMany(mappedBy = "orders", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private List<OrderItems> orderItems;
+	@ManyToMany
+	@JoinTable(
+	 name = "OrderItems", 
+	 joinColumns = @JoinColumn(name = "OrderId"), 
+	 inverseJoinColumns = @JoinColumn(name = "ProductId"))
+	private List<Products> products;
 	
 	public Orders() {
 		
@@ -82,6 +90,16 @@ public class Orders {
 	public void setTotalAmount(double totalAmount) {
 		this.totalAmount = totalAmount;
 	}
+
+	public List<Products> getProducts() {
+		return products;
+	}
+
+	public void setProducts(List<Products> products) {
+		this.products = products;
+	}
+	
+	
 	
 	
 	

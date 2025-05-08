@@ -2,6 +2,9 @@ package projects.ClothBotiqueManagementSystem.Controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -31,8 +34,12 @@ public class ProductsController {
 	
 	@ResponseBody
 	@RequestMapping(value = "/update/{id}", method = RequestMethod.PUT)
-	public String updateProducts(@RequestBody Products updatedProduct, @PathVariable("id") int id) {
+	public String updateProducts(@RequestBody Products updatedProduct, @PathVariable("id") int id, HttpServletRequest request) {
 		
+		HttpSession session = request.getSession(false);
+        if (session == null || session.getAttribute("user") == null) {
+            return "Access denied: No active session.";
+        } else {
 		Products prod = service.getProductsById(id);
 		prod.setProductName(updatedProduct.getProductName());
 		prod.setDescription(updatedProduct.getDescription());
@@ -40,7 +47,7 @@ public class ProductsController {
 		prod.setCreatedOn(updatedProduct.getCreatedOn());
 		service.updateProducts(prod);
 		System.out.println("Updated data " + prod);
-		
+        }
 		return "Successfully Updated";
 		
 	}

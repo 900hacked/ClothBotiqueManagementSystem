@@ -1,5 +1,6 @@
 package projects.ClothBotiqueManagementSystem.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import projects.ClothBotiqueManagementSystem.DAO.OrdersDAO;
 import projects.ClothBotiqueManagementSystem.Model.Orders;
+import projects.ClothBotiqueManagementSystem.Model.Products;
 
 @Service
 public class OrderServiceImpli implements OrderService {
@@ -17,12 +19,14 @@ public class OrderServiceImpli implements OrderService {
 
 	@Override
 	@Transactional
-	public void addProduct(Orders order) {
+	public void addOrder(Orders order) {
 		
-		orderDao.addProduct(order);
+		orderDao.addOrder(order);
 		
 	}
 
+	
+	
 	@Override
 	@Transactional
 	public void updateOrders(Orders name) {

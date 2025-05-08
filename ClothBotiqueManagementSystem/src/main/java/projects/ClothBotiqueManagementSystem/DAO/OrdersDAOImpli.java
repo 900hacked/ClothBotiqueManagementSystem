@@ -1,5 +1,6 @@
 package projects.ClothBotiqueManagementSystem.DAO;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Session;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 
 import projects.ClothBotiqueManagementSystem.Model.Orders;
+import projects.ClothBotiqueManagementSystem.Model.Products;
 
 @Repository
 public class OrdersDAOImpli implements OrdersDAO {
@@ -16,11 +18,24 @@ public class OrdersDAOImpli implements OrdersDAO {
 	@Autowired
 	private SessionFactory sessionFactory;
 
-	@Override
-	public void addProduct(Orders order) {
-		Session session = sessionFactory.getCurrentSession();
-		session.persist(order);
-		
+//	@Override
+//	public void addOrder(Orders order) {
+//		Session session = sessionFactory.getCurrentSession();
+//		session.persist(order);
+//		
+//		
+//	}
+	
+	public void addOrder(Orders order) {
+	    List<Products> managedProducts = new ArrayList<>();
+	    Session session = sessionFactory.getCurrentSession();
+	    for (Products p : order.getProducts()) {
+	        Products managed =(Products) session.get(Products.class, new Integer(p.getProductID()));
+	            
+	        managedProducts.add(managed);
+	    }
+	    order.setProducts(managedProducts);
+	    session.persist(order); // This will now persist to OrderItems table
 	}
 
 	@Override

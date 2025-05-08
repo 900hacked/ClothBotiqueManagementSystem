@@ -8,7 +8,7 @@ import projects.ClothBotiqueManagementSystem.Model.Orders;
 
 public interface OrdersDAO {
 
-	public void addProduct(Orders order);
+	public void addOrder(Orders order);
 
 
 	public void updateOrders(Orders name);

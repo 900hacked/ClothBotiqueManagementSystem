@@ -9,10 +9,13 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+
+
 
 @Entity
 @Table(name = "Products")
@@ -31,8 +34,10 @@ public class Products {
 	@JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
 	private LocalDateTime createdOn;
 	
-	@OneToMany(mappedBy = "products", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private List<OrderItems> orderItems;
+
+	
+	@ManyToMany(mappedBy = "products")
+	private List<Orders> orders;
 	
 	public Products() {
 		
@@ -84,6 +89,14 @@ public class Products {
 
 	public void setCreatedOn(LocalDateTime createdOn) {
 		this.createdOn = createdOn;
+	}
+
+	public List<Orders> getOrders() {
+		return orders;
+	}
+
+	public void setOrders(List<Orders> orders) {
+		this.orders = orders;
 	}
 	
 	
