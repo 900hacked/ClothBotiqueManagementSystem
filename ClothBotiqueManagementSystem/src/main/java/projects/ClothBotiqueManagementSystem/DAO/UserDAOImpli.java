@@ -57,7 +57,7 @@ public class UserDAOImpli implements UserDAO {
 	@Override
 	public List<User> listUser() {
 		Session session = sessionFactory.getCurrentSession();
-		List<User> productList = session.createQuery("from Products").list();
+		List<User> productList = session.createQuery("from User").list();
 		return productList;
 	}
 

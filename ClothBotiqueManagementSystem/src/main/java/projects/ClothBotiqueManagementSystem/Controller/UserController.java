@@ -1,6 +1,7 @@
 package projects.ClothBotiqueManagementSystem.Controller;
 
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -57,10 +58,10 @@ public class UserController {
 	
 	public String updateUser(@RequestBody User updatedUser, @PathVariable("id") int id, HttpServletRequest request) {
 		
-//		HttpSession session = request.getSession(false);
-//        if (session == null || session.getAttribute("user") == null) {
-//            return "Access denied: No active session.";
-//        } else {
+		HttpSession session = request.getSession(false);
+        if (session == null || session.getAttribute("user") == null) {
+            return "Access denied: No active session.";
+        } else {
         
 		User you = service.getUserById(id);
 		you.setEmail(updatedUser.getEmail());
@@ -71,6 +72,7 @@ public class UserController {
 		service.updateUsers(you);
 		System.out.println("updated data:" + you);
 		return "Successfully updated";
+		}
         
 	}
 	
@@ -129,17 +131,17 @@ public class UserController {
         }
 	}
 	
+
+	
 	@ResponseBody
 	@RequestMapping(value = "/gets", method = RequestMethod.GET)
 	public List<User> getAll(HttpServletRequest request) {
-		
-		HttpSession session = request.getSession(false);
-      if (session == null || session.getAttribute("user") == null) {
-          return null;
-      } else {
-    	  return  service.listUser();
-      }
-		
-		
+	    HttpSession session = request.getSession(false);
+	    if (session == null || session.getAttribute("user") == null) {
+	        System.out.println("No Active Session");
+	        return new ArrayList<>(); // Return an empty list or handle appropriately
+	    } else {
+	        return service.listUser();
+	    }
 	}
 }
