@@ -12,14 +12,18 @@ import javax.validation.Valid;
 import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+
 import projects.ClothBotiqueManagementSystem.Model.User;
 import projects.ClothBotiqueManagementSystem.Service.UserService;
+import projects.ClothBotiqueManagementSystem.Service.UserValidation;
 
 @Controller
 @RequestMapping("/user")
@@ -28,26 +32,26 @@ public class UserController {
 	@Autowired
 	private UserService service;
 	
+	UserValidation validate = new UserValidation();
+	
 	@ResponseBody
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
-	public String registerUser(@RequestBody @Valid User user ) {
+	public String registerUser(@RequestBody @Valid User user, BindingResult result, HttpServletRequest request ) {
 		
-//		HttpSession session = request.getSession(false);
-//        if (session == null || session.getAttribute("user") == null) {
-//            return "Access denied: No active session.";
-//        }
+		HttpSession session = request.getSession(false);
+        if (session == null || session.getAttribute("user") == null) {
+            return "Access denied: No active session.";
+        }
 		
-//		if (result.hasErrors()) {
-//            return "Email validation failed: " + result.getAllErrors();
-//        }
-//        else {
-//        	service.addProduct(name);
-//        	 return "User registered successfully";
-//        }
+		if (result.hasErrors()) {
+            return "Email validation failed: " + result.getAllErrors();
+        }
+        else {
+        	service.addUser(user);
+        	 return "User registered successfully";
+        }
 		
-		service.addUser(user);
 		
-		return "User successfully added";
 		
 		
 		
@@ -143,5 +147,18 @@ public class UserController {
 	    } else {
 	        return service.listUser();
 	    }
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/valid")
+    public String registerUser(@RequestBody @Validated User user, BindingResult result) {
+		  validate.validate(user, result);
+        if (result.hasErrors()) {
+            return "Registration has failed: " + result.getAllErrors();
+        }
+        else {
+        	service.addUser(user);
+        	 return "Registered Successfully";
+        }
 	}
 }

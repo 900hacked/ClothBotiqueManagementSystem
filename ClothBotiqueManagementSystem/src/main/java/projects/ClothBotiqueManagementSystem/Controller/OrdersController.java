@@ -36,19 +36,7 @@ public class OrdersController {
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	public String addOrder(@RequestBody @Valid Orders orders ) {
 		
-//		HttpSession session = request.getSession(false);
-//        if (session == null || session.getAttribute("user") == null) {
-//            return "Access denied: No active session.";
-//        }
-		
-//		if (result.hasErrors()) {
-//            return "Email validation failed: " + result.getAllErrors();
-//        }
-//        else {
-//        	service.addProduct(name);
-//        	 return "User registered successfully";
-//        }
-		
+
 		service.addOrder(orders);
 		
 		return "Order successfully added";
@@ -62,11 +50,7 @@ public class OrdersController {
 	
 	public String updateOrder(@RequestBody Orders updatedProduct, @PathVariable("id") int id, HttpServletRequest request) {
 		
-////		HttpSession session = request.getSession(false);
-////        if (session == null || session.getAttribute("user") == null) {
-////            return "Access denied: No active session.";
-////        } else {
-//        
+
 		Orders ord = service.getOrdersById(id);
 		ord.setOrderDate(updatedProduct.getOrderDate());
 		ord.setStatus(updatedProduct.getStatus());
@@ -92,35 +76,7 @@ public class OrdersController {
 		service.removeOrders(id);
 		return "Order " + id + " has been deleted";
 	
-}
-////	@ResponseBody
-////	@RequestMapping(value = "/login", method = RequestMethod.POST)
-////	public String login(HttpServletRequest request, HttpServletResponse response) {
-////		
-////		String authHeader = request.getHeader("Authorization");
-////		
-////		if (authHeader == null || !authHeader.startsWith("Basic ")) {
-////            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-////            return "Missing or invalid Authorization header";
-////        }
-////		String base64Credentials = authHeader.substring(6);
-////
-////		 
-////        String credentials = new String(Base64.decodeBase64(base64Credentials), StandardCharsets.UTF_8);
-////  
-////        String[] values = credentials.split(":", 2);
-////
-////        
-//// 
-////        if ("admin".equals(values[0]) && "password".equals(values[1])) {
-////            HttpSession session = request.getSession();
-////            session.setAttribute("user", values[0]);
-////            return "Session Token: " + session.getId();
-////        } else {
-////            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-////            return "Invalid credentials";
-////        }
-////	}
+	}
 	
 	@ResponseBody
 	@RequestMapping(value = "/gets", method = RequestMethod.GET)
